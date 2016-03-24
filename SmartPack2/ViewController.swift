@@ -134,8 +134,9 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             if thisCharacteristic.UUID == testConfigUUID2 {  //// Check for valid characetersic  WARNING
                 // Enable Sensor Notification
                 print("Hello")
-                self.smartpackPeripheral.setNotifyValue(true, forCharacteristic: thisCharacteristic)
-                print(thisCharacteristic)
+                self.smartpackPeripheral.setNotifyValue(true,forCharacteristic: thisCharacteristic)
+                self.smartpackPeripheral.readValueForCharacteristic(thisCharacteristic)
+                
             }
             
             
@@ -153,7 +154,10 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         self.statusLabel.text = "Connected"
         
         print("status")
-        print(characteristic)
+        print(characteristic.value!)
+        print(characteristic.isNotifying)
+        print(characteristic.value!.length)
+        
         // self.sensorTagTableView.reloadData()
     }
     
