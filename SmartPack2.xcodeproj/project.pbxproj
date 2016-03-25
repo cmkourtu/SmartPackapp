@@ -14,6 +14,7 @@
 		431DDE8B1CA425BA0090DD0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 431DDE891CA425BA0090DD0C /* LaunchScreen.storyboard */; };
 		431DDE961CA425BA0090DD0C /* SmartPack2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDE951CA425BA0090DD0C /* SmartPack2Tests.swift */; };
 		431DDEA11CA425BA0090DD0C /* SmartPack2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDEA01CA425BA0090DD0C /* SmartPack2UITests.swift */; };
+		431DDEB11CA4B79A0090DD0C /* smartpackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		431DDE9C1CA425BA0090DD0C /* SmartPack2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartPack2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		431DDEA01CA425BA0090DD0C /* SmartPack2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartPack2UITests.swift; sourceTree = "<group>"; };
 		431DDEA21CA425BA0090DD0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = smartpackTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				431DDE871CA425BA0090DD0C /* Assets.xcassets */,
 				431DDE891CA425BA0090DD0C /* LaunchScreen.storyboard */,
 				431DDE8C1CA425BA0090DD0C /* Info.plist */,
+				431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */,
 			);
 			path = SmartPack2;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				431DDEB11CA4B79A0090DD0C /* smartpackTableViewCell.swift in Sources */,
 				431DDE831CA425BA0090DD0C /* ViewController.swift in Sources */,
 				431DDE811CA425BA0090DD0C /* AppDelegate.swift in Sources */,
 			);

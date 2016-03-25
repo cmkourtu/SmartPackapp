@@ -9,8 +9,12 @@
 import UIKit
 import CoreBluetooth
 
-class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDelegate {
+class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDelegate,UITableViewDataSource, UITableViewDelegate  {
     
+    
+    
+    // Table View
+    var smartpackTableView : UITableView!
     
     // BLE
     var centralManager : CBCentralManager!
@@ -20,6 +24,11 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     // Title labels
     var titleLabel : UILabel!
     var statusLabel : UILabel!
+    var allSensorLabels : [String] = []
+    var allSensorValues : [Double] = []
+
+    
+    
     
     // UUID
     
@@ -154,15 +163,31 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         self.statusLabel.text = "Connected"
         
         print("status")
-        print(characteristic.value!)
-        print(characteristic.isNotifying)
-        print(characteristic.value!.length)
         
-        // self.sensorTagTableView.reloadData()
+        if characteristic.value != nil
+        {
+            print(characteristic.value!)
+        }
+
+        
+        // self.smartpackTableView.reloadData()
     }
     
 
-    
+    func setupsmartpackTableView () {
+        
+        self.smartpackTableView = UITableView()
+        self.smartpackTableView.delegate = self
+        self.smartpackTableView.dataSource = self
+        
+        
+        self.smartpackTableView.frame = CGRect(x: self.view.bounds.origin.x, y: self.statusLabel.frame.maxY+20, width: self.view.bounds.width, height: self.view.bounds.height)
+        
+        self.smartpackTableView.registerClass(smartpackTableViewCell.self, forCellReuseIdentifier: "sensorTagCell")
+        
+        self.smartpackTableView.tableFooterView = UIView() // to hide empty lines after cells
+        self.view.addSubview(self.smartpackTableView)
+    }
     
 
     override func viewDidLoad() {
@@ -193,7 +218,58 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         statusLabel.frame = CGRect(x: self.view.frame.origin.x, y: self.titleLabel.frame.maxY, width: self.view.frame.width, height: self.statusLabel.bounds.height)
         self.view.addSubview(statusLabel)
         
+        
+        
+        // Start up Table View
+        setupsmartpackTableView()
+        
+        allSensorLabels = getSensorLabels()
+        for (var i=0; i<allSensorLabels.count; i++) {
+            allSensorValues.append(0)
+        }
     }
+    
+     func getSensorLabels () -> [String] {
+        let sensorLabels : [String] = [
+            "Tag 1",
+            "Tag 2",
+            "Tag 3",
+            "Tag 4",
+            "Tag 5",
+            "Tag 6",
+            "Tag 7",
+            "Tag 8",
+            "Tag 9",
+            "Tag 10",
+            "GPS",
+            "Direction"
+        ]
+        return sensorLabels
+    }
+    
+    
+    /******* UITableViewDataSource *******/
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allSensorLabels.count
+    }
+    
+    
+    /******* UITableViewDelegate *******/
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let thisCell = tableView.dequeueReusableCellWithIdentifier("sensorTagCell") as! smartpackTableViewCell
+        thisCell.sensorNameLabel.text  = allSensorLabels[indexPath.row]
+        
+        let valueString = NSString(format: "%.2f", allSensorValues[indexPath.row])
+        thisCell.sensorValueLabel.text = valueString as String
+        
+        return thisCell
+    }
+    
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
