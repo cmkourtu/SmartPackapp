@@ -164,21 +164,27 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         print("status")
         
-        if characteristic.value != nil
+        if characteristic.value != nil && characteristic.UUID == testConfigUUID2
         {
             print("Test for array")
             print(characteristic.value!)
             print(dataToUnsignedBytes8(characteristic.value!))
             let valueArray = dataToUnsignedBytes8(characteristic.value!)
             
-            let str = String(valueArray[8], radix: 2)
-            print(valueArray[8])
-            print(str)
+          if (valueArray.count > 10)
+          {
             
-            for (var i=0; i<allSensorLabels.count; i++) {
-                if i == 0{
-                    allSensorValues[0] = "The Test"
+            let sliceTagArray = valueArray[8..<20]
+            let tagArray = Array(sliceTagArray)
+            let returnedValues = convertTagPacket(tagArray)
+            print(returnedValues)
+            
+                for(var i=0;i < 10; i++){
+                
+                    allSensorValues[i] = returnedValues[i]
                 }
+            
+            
             
             }
             
@@ -191,13 +197,28 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     
 }
 
-    func convertTagPacket(tagArray: [UInt]) -> [Int]
+    func convertTagPacket(tagArray: [UInt8]) -> [String]
     {
-        var tagValues : [Int] = []
+        var tagValues : [String] = []
         
         for(var i=0; i<tagArray.count; i++)
         {
-            let str = String(tagArray[i], radix: 2)
+            for(var j=0; j<8;j++)
+            {
+            
+                let k = tagArray[i] & 1 << UInt8(j)
+                print(tagArray)
+                print(k)
+                
+                if k != 0{
+                    tagValues.append("Present")
+                }
+                else{
+                    tagValues.append("Absent")
+                }
+                
+            }
+            
         }
     
     
