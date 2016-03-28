@@ -170,6 +170,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             print(characteristic.value!)
             print(dataToUnsignedBytes8(characteristic.value!))
             let valueArray = dataToUnsignedBytes8(characteristic.value!)
+            print(valueArray)
             
           if (valueArray.count > 10)
           {
@@ -185,18 +186,58 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
                 }
             
             
+            allSensorValues[10] = convertGPS(valueArray)
+            allSensorValues[11] = String(valueArray[0])
+            
             
             }
-            
+          self.smartpackTableView.reloadData()
         }
         
         
 
         
-         self.smartpackTableView.reloadData()
+        
     
 }
 
+    func convertGPS(valueArray: [UInt8]) -> String
+    {
+        let NSdigit = String(valueArray[1])
+        let NSdecimal = String(Int(valueArray[2])*256 + Int(valueArray[3]))
+        let WEdigit = String(valueArray[4])
+        let WEdecimal = String(Int(valueArray[5])*256 + Int(valueArray[6]))
+        
+        
+        let direction = Int(valueArray[7])
+        var stringDirection = [" "," "]
+        
+        
+        switch direction{
+            
+        case 1:
+             stringDirection = ["ºN","ºW"]
+        case 2:
+             stringDirection = ["ºN","ºE"]
+        case 3:
+             stringDirection = ["ºS","ºW"]
+        case 4:
+             stringDirection = ["ºS","ºE"]
+        default:
+             stringDirection = ["X","X"]
+            
+        }
+        
+       
+        
+        let GPScoordinates = NSdigit + "." + NSdecimal + stringDirection[0] + " " + WEdigit + "." + WEdecimal + stringDirection[1]
+        
+        print(GPScoordinates)
+    
+        return GPScoordinates
+    }
+    
+    
     func convertTagPacket(tagArray: [UInt8]) -> [String]
     {
         var tagValues : [String] = []
@@ -225,6 +266,10 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         return tagValues
     }
+    
+    
+    
+    
     
     
     
@@ -313,7 +358,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         for (var i=0; i<allSensorLabels.count; i++) {
             print(i)
             print(allSensorValues)
-            allSensorValues[i] = "None"
+            allSensorValues[i] = "Loading Values..."
             
         }
         
@@ -334,7 +379,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             "Tag 9",
             "Tag 10",
             "GPS",
-            "Direction"
+            "# of Tags Present"
         ]
         return sensorLabels
     }
@@ -352,8 +397,8 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             "None",
             "None",
             "None",
-            "None",
-            "none"
+            "404247 869115",
+            "None"
         ]
         return sensorValues
     }
