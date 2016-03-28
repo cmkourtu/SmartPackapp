@@ -38,7 +38,7 @@ class smartpackTableViewCell: UITableViewCell {
         // sensor value
         self.addSubview(sensorValueLabel)
         sensorValueLabel.font = UIFont(name: "HelveticaNeue", size: 18)
-        sensorValueLabel.frame = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: self.frame.width, height: self.frame.height)
+        sensorValueLabel.frame = CGRect(x: self.bounds.origin.x-self.layoutMargins.right*2, y: self.bounds.origin.y, width: self.frame.width, height: self.frame.height)
         sensorValueLabel.textAlignment = NSTextAlignment.Right
         sensorValueLabel.text = "Value"
     }

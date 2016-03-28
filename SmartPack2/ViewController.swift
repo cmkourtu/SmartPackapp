@@ -25,7 +25,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     var titleLabel : UILabel!
     var statusLabel : UILabel!
     var allSensorLabels : [String] = []
-    var allSensorValues : [Double] = []
+    var allSensorValues : [String] = []
 
     
     
@@ -166,12 +166,72 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         if characteristic.value != nil
         {
+            print("Test for array")
             print(characteristic.value!)
+            print(dataToUnsignedBytes8(characteristic.value!))
+            let valueArray = dataToUnsignedBytes8(characteristic.value!)
+            
+            let str = String(valueArray[8], radix: 2)
+            print(valueArray[8])
+            print(str)
+            
+            for (var i=0; i<allSensorLabels.count; i++) {
+                if i == 0{
+                    allSensorValues[0] = "The Test"
+                }
+            
+            }
+            
         }
+        
+        
 
         
-        // self.smartpackTableView.reloadData()
+         self.smartpackTableView.reloadData()
+    
+}
+
+    func convertTagPacket(tagArray: [UInt]) -> [Int]
+    {
+        var tagValues : [Int] = []
+        
+        for(var i=0; i<tagArray.count; i++)
+        {
+            let str = String(tagArray[i], radix: 2)
+        }
+    
+    
+        
+        return tagValues
     }
+    
+    
+    
+    func dataToSignedBytes16(value : NSData) -> [Int16] {
+        let count = value.length
+        var array = [Int16](count: count, repeatedValue: 0)
+        value.getBytes(&array, length:count * sizeof(Int16))
+        return array
+    }
+    
+     func dataToUnsignedBytes16(value : NSData) -> [UInt16] {
+        let count = value.length
+        var array = [UInt16](count: count, repeatedValue: 0)
+        value.getBytes(&array, length:count * sizeof(UInt16))
+        return array
+    }
+    
+    
+    
+    func dataToUnsignedBytes8(value : NSData) -> [UInt8] {
+        let count = value.length
+        var array = [UInt8](count: count, repeatedValue: 0)
+        value.getBytes(&array, length:count * sizeof(UInt8))
+        return array
+    }
+    
+    
+    
     
 
     func setupsmartpackTableView () {
@@ -224,9 +284,20 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         setupsmartpackTableView()
         
         allSensorLabels = getSensorLabels()
+        allSensorValues = getSensorValues()
+        
+        
+        self.smartpackTableView.reloadData()
+        
         for (var i=0; i<allSensorLabels.count; i++) {
-            allSensorValues.append(0)
+            print(i)
+            print(allSensorValues)
+            allSensorValues[i] = "None"
+            
         }
+        
+        
+       
     }
     
      func getSensorLabels () -> [String] {
@@ -248,6 +319,25 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     }
     
     
+    func getSensorValues () -> [String] {
+        let sensorValues : [String] = [
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "none"
+        ]
+        return sensorValues
+    }
+    
+    
     /******* UITableViewDataSource *******/
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -262,7 +352,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         let thisCell = tableView.dequeueReusableCellWithIdentifier("sensorTagCell") as! smartpackTableViewCell
         thisCell.sensorNameLabel.text  = allSensorLabels[indexPath.row]
         
-        let valueString = NSString(format: "%.2f", allSensorValues[indexPath.row])
+        let valueString = NSString(format: "%@", allSensorValues[indexPath.row])
         thisCell.sensorValueLabel.text = valueString as String
         
         return thisCell
