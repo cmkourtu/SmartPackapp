@@ -15,6 +15,7 @@
 		431DDE961CA425BA0090DD0C /* SmartPack2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDE951CA425BA0090DD0C /* SmartPack2Tests.swift */; };
 		431DDEA11CA425BA0090DD0C /* SmartPack2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDEA01CA425BA0090DD0C /* SmartPack2UITests.swift */; };
 		431DDEB11CA4B79A0090DD0C /* smartpackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */; };
+		43EA7FAF1CAC3ECF0055611C /* tagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EA7FAE1CAC3ECF0055611C /* tagView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		431DDEA01CA425BA0090DD0C /* SmartPack2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartPack2UITests.swift; sourceTree = "<group>"; };
 		431DDEA21CA425BA0090DD0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = smartpackTableViewCell.swift; sourceTree = "<group>"; };
+		43EA7FAE1CAC3ECF0055611C /* tagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tagView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				431DDE891CA425BA0090DD0C /* LaunchScreen.storyboard */,
 				431DDE8C1CA425BA0090DD0C /* Info.plist */,
 				431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */,
+				43EA7FAE1CAC3ECF0055611C /* tagView.swift */,
 			);
 			path = SmartPack2;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				431DDEB11CA4B79A0090DD0C /* smartpackTableViewCell.swift in Sources */,
 				431DDE831CA425BA0090DD0C /* ViewController.swift in Sources */,
 				431DDE811CA425BA0090DD0C /* AppDelegate.swift in Sources */,
+				43EA7FAF1CAC3ECF0055611C /* tagView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +495,7 @@
 				431DDEA71CA425BA0090DD0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		431DDEA81CA425BA0090DD0C /* Build configuration list for PBXNativeTarget "SmartPack2Tests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +504,7 @@
 				431DDEAA1CA425BA0090DD0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		431DDEAB1CA425BA0090DD0C /* Build configuration list for PBXNativeTarget "SmartPack2UITests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +513,7 @@
 				431DDEAD1CA425BA0090DD0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

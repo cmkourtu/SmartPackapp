@@ -14,6 +14,7 @@ class smartpackTableViewCell: UITableViewCell {
     var sensorNameLabel  = UILabel()
     var sensorValueLabel = UILabel()
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,6 +22,8 @@ class smartpackTableViewCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        
+        
         
         // Configure the view for the selected state
     }
@@ -30,6 +33,7 @@ class smartpackTableViewCell: UITableViewCell {
         
         // sensor name
         self.addSubview(sensorNameLabel)
+        
         sensorNameLabel.font = UIFont(name: "HelveticaNeue", size: 18)
         sensorNameLabel.frame = CGRect(x: self.bounds.origin.x+self.layoutMargins.left*2, y: self.bounds.origin.y, width: self.frame.width, height: self.frame.height)
         sensorNameLabel.textAlignment = NSTextAlignment.Left
@@ -37,6 +41,7 @@ class smartpackTableViewCell: UITableViewCell {
         
         // sensor value
         self.addSubview(sensorValueLabel)
+      
         sensorValueLabel.font = UIFont(name: "HelveticaNeue", size: 18)
         sensorValueLabel.frame = CGRect(x: self.bounds.origin.x-self.layoutMargins.right*2, y: self.bounds.origin.y, width: self.frame.width, height: self.frame.height)
         sensorValueLabel.textAlignment = NSTextAlignment.Right

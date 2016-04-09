@@ -26,6 +26,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     var statusLabel : UILabel!
     var allSensorLabels : [String] = []
     var allSensorValues : [String] = []
+    var writer : CBCharacteristic!
 
     
     
@@ -34,6 +35,8 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     
     let testConfigUUID1 = CBUUID(string: "12345678-9012-3456-7890-1234567890FF") // UUID for private service
     let testConfigUUID2 = CBUUID(string: "12345678-9012-3456-7890-123456789AFF") // UUID for private charactersic
+    let testConfigUUID3 = CBUUID(string: "12345678-9012-3456-7890-123456789AF1") // UUID for private charactersic
+    
     
     
     
@@ -145,7 +148,13 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
                 print("Hello")
                 self.smartpackPeripheral.setNotifyValue(true,forCharacteristic: thisCharacteristic)
                 self.smartpackPeripheral.readValueForCharacteristic(thisCharacteristic)
+                self.statusLabel.text = "Connected"
                 
+            }
+            
+            if(thisCharacteristic.UUID == testConfigUUID3)
+            {
+                self.writer = thisCharacteristic
             }
             
             
@@ -158,9 +167,19 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
     }
     
+    
+    func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?){
+        
+        if(error == nil)
+        {
+            print("The man in the middle")
+        }
+        
+    }
+    
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         
-        self.statusLabel.text = "Connected"
+        self.statusLabel.text = "Value Updated"
         
         print("status")
         
@@ -266,9 +285,6 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         return tagValues
     }
-    
-    
-    
     
     
     
@@ -418,10 +434,34 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         let thisCell = tableView.dequeueReusableCellWithIdentifier("sensorTagCell") as! smartpackTableViewCell
         thisCell.sensorNameLabel.text  = allSensorLabels[indexPath.row]
         
+    
         let valueString = NSString(format: "%@", allSensorValues[indexPath.row])
         thisCell.sensorValueLabel.text = valueString as String
         
         return thisCell
+    }
+    
+    func tableView(_ tableView: UITableView,
+                              didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+    
+        
+        
+        var testint = indexPath.row
+        let data = NSData(bytes: &testint, length: 5)
+        
+        print(testint)
+        print(data)
+        print(self.writer)
+    
+        self.smartpackPeripheral.writeValue(data, forCharacteristic: self.writer,  type: CBCharacteristicWriteType.WithResponse)
+        
+        print("after")
+        print(self.writer.value)
+        
+    //   let tagViewController = storyboard!.instantiateViewControllerWithIdentifier("tagView")
+    //    showViewController(tagViewController,sender: self)
+        
     }
     
     
