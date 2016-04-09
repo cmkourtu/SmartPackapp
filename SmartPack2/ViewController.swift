@@ -452,7 +452,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         let data = NSData(bytes: &testint, length: 5)
         
         
-        if( self.statusLabel == "Connected")
+        if( self.statusLabel.text == "Connected")
         {
             
             
