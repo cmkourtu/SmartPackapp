@@ -27,6 +27,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     var allSensorLabels : [String] = []
     var allSensorValues : [String] = []
     var writer : CBCharacteristic!
+    var valuesRead : Bool!
 
     
     
@@ -445,10 +446,18 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
                               didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
     
-        
+       
         
         var testint = indexPath.row
         let data = NSData(bytes: &testint, length: 5)
+        
+        
+        if( self.statusLabel == "Connected")
+        {
+            
+            
+        
+        
         
         print(testint)
         print(data)
@@ -458,11 +467,14 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         print("after")
         print(self.writer.value)
+        }
+        else{print("Sorry, no dice")}
         
     //   let tagViewController = storyboard!.instantiateViewControllerWithIdentifier("tagView")
     //    showViewController(tagViewController,sender: self)
-        
     }
+    
+    
     
     
     
