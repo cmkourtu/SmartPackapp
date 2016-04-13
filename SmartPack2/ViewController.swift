@@ -28,6 +28,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     var allSensorValues : [String] = []
     var writer : CBCharacteristic!
     var valuesRead : Bool!
+    
 
     
     
@@ -180,9 +181,10 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         
-        self.statusLabel.text = "Value Updated"
+        // self.statusLabel.text = "Value Updated"
         
-        print("status")
+        print("*******status********")
+        print(characteristic)
         
         if characteristic.value != nil && characteristic.UUID == testConfigUUID2
         {
@@ -443,6 +445,9 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         ]
         return sensorValues
     }
+    
+    
+    
     
     
     /******* UITableViewDataSource *******/
