@@ -221,6 +221,11 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     
 }
 
+    //Method: convertGPS
+    
+    //Function: This method recieves and array of UINT values, and uses the agreed upon method of converting said values in readable GPS location values.
+    
+    
     func convertGPS(valueArray: [UInt8]) -> String
     {
         let NSdigit = String(valueArray[1])
@@ -257,6 +262,12 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         return GPScoordinates
     }
     
+    /// Method : convertTagPacket
+    
+    /// Function : Recieves an array of UInts, ands uses that data to create an array of values that represent the state of 
+    /// tag, tags marked "Present" are in the battery backpack, tags marked absent are not.
+    
+    
     
     func convertTagPacket(tagArray: [UInt8]) -> [String]
     {
@@ -287,7 +298,9 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         return tagValues
     }
     
+    //// Methods: Dataconversion
     
+    //// Function: These methods take in a paramater values type NSData that will probably be recieved by a charactersic, and return a Int of the respective values, this allows us to decode our bluetooth values
     
     
     func dataToSignedBytes16(value : NSData) -> [Int16] {
@@ -383,6 +396,11 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
        
     }
     
+    // Method Name: getSensorLabels
+    
+    // Function: Returns the default tags names to the calling function in the form of an array of strings.
+    
+    
      func getSensorLabels () -> [String] {
         let sensorLabels : [String] = [
             "Tag 1",
@@ -400,6 +418,12 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         ]
         return sensorLabels
     }
+    
+    
+    
+    // Method Name: getSensorValues
+    
+    // Function: Returns the default sensor status values to the calling function in the form of an array of strings.
     
     
     func getSensorValues () -> [String] {
@@ -442,31 +466,37 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         return thisCell
     }
     
+    
+    // Method Name: didSelectRowAtIndex
+    
+    // This code runs whenever the users selects a row from the column, it begins by checking to see 
+    // if the user actually has loaded information into the cell, and then send the cell IndexRow variables
+    // which is equal to Row - 1.
+    
     func tableView(_ tableView: UITableView,
                               didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
     
-       
-        
+    
         var testint = indexPath.row
         let data = NSData(bytes: &testint, length: 5)
         
+        pressme()
         
-        if( self.statusLabel.text == "Connected")
+        if( allSensorValues[testint] != "Loading Values...")  // Check label tag for connectivty for checking the called SensorTag Value for non default values
         {
             
-            
-        
-        
-        
-        print(testint)
-        print(data)
-        print(self.writer)
+            print(testint)     // Diagnostic print statments
+            print(data)
+            print(self.writer)
     
-        self.smartpackPeripheral.writeValue(data, forCharacteristic: self.writer,  type: CBCharacteristicWriteType.WithResponse)
+           // self.smartpackPeripheral.writeValue(data, forCharacteristic: self.writer,  type: CBCharacteristicWriteType.WithResponse) // Writing values to bluetooth charactersic selected. If the write is success the delegate for didWriteValueForCharacteristic
         
-        print("after")
-        print(self.writer.value)
+            
+            
+            
+            print("after")
+            print(self.writer.value)
         }
         else{print("Sorry, no dice")}
         
@@ -475,8 +505,20 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     }
     
     
-    
-    
+    func pressme(){
+        
+        //******** navigation from one view controller to another *******//
+        
+        self.navigationController!.pushViewController(tagViewController(), animated: false)
+        
+        //******** creating UIalertview programmatically*******//
+        
+        let alertView=UIAlertView()
+        alertView.title="RK"
+        alertView.addButtonWithTitle("OK")
+        alertView.message="Now you are in second view controller"
+        alertView.show()
+    }
     
 
     override func didReceiveMemoryWarning() {
