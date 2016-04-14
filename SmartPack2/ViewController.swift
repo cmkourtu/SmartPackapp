@@ -115,6 +115,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         self.statusLabel.text = "Disconnected"
         central.scanForPeripheralsWithServices(nil, options: nil)
+        print("Disconnected")
     }
 
     
@@ -124,7 +125,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         self.statusLabel.text = "Looking at peripheral services"
         for service in peripheral.services! {
             let thisService = service as CBService
-            if 1 == 1 {        ///// CHANGE THIS LATER TO CHECK FOR VALID SERVICES!!!
+            if thisService.UUID == testConfigUUID1 {        ///// CHANGE THIS LATER TO CHECK FOR VALID SERVICES!!!
                 // Discover characteristics of all valid services
                 peripheral.discoverCharacteristics(nil, forService: thisService)
             }
@@ -144,7 +145,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             print(thisCharacteristic)
             print(charateristic)
      
-            
+            print("Next Level")
             if thisCharacteristic.UUID == testConfigUUID2 {  //// Check for valid characetersic  WARNING
                 // Enable Sensor Notification
                 print("Hello")
@@ -217,7 +218,8 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         }
         
         
-
+print("The Outer Loop")
+print(characteristic)
         
         
     
@@ -518,11 +520,11 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         //******** creating UIalertview programmatically*******//
         
-        let alertView=UIAlertView()
-        alertView.title="RK"
-        alertView.addButtonWithTitle("OK")
-        alertView.message="Now you are in second view controller"
-        alertView.show()
+//        let alertView=UIAlertView()
+//        alertView.title="RK"
+//        alertView.addButtonWithTitle("OK")
+//        alertView.message="Now you are in the second view controller"
+//        alertView.show()
     }
     
 
