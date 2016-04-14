@@ -17,6 +17,7 @@
 		431DDEB11CA4B79A0090DD0C /* smartpackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */; };
 		43EA7FAF1CAC3ECF0055611C /* tagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EA7FAE1CAC3ECF0055611C /* tagView.swift */; };
 		43EA7FF11CBF00980055611C /* tagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EA7FF01CBF00980055611C /* tagModel.swift */; };
+		43EA7FF31CBF1D7F0055611C /* locationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EA7FF21CBF1D7F0055611C /* locationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = smartpackTableViewCell.swift; sourceTree = "<group>"; };
 		43EA7FAE1CAC3ECF0055611C /* tagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tagView.swift; sourceTree = "<group>"; };
 		43EA7FF01CBF00980055611C /* tagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tagModel.swift; sourceTree = "<group>"; };
+		43EA7FF21CBF1D7F0055611C /* locationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = locationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				431DDEB01CA4B79A0090DD0C /* smartpackTableViewCell.swift */,
 				43EA7FAE1CAC3ECF0055611C /* tagView.swift */,
 				43EA7FF01CBF00980055611C /* tagModel.swift */,
+				43EA7FF21CBF1D7F0055611C /* locationController.swift */,
 			);
 			path = SmartPack2;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43EA7FF31CBF1D7F0055611C /* locationController.swift in Sources */,
 				431DDEB11CA4B79A0090DD0C /* smartpackTableViewCell.swift in Sources */,
 				431DDE831CA425BA0090DD0C /* ViewController.swift in Sources */,
 				43EA7FF11CBF00980055611C /* tagModel.swift in Sources */,

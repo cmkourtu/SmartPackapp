@@ -527,6 +527,9 @@ print(characteristic)
 //        alertView.show()
     }
     
+    
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

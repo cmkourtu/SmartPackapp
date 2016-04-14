@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var nav:UINavigationController?
+    var coreLocationController:CoreLocationController?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -25,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window!.rootViewController = self.nav
         self.nav!.setNavigationBarHidden(true, animated: false)
+        
+        self.coreLocationController     = CoreLocationController()
+        
         return true
     }
 
