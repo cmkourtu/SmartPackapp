@@ -14,8 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var nav:UINavigationController?
     var coreLocationController:CoreLocationController?
+    var tagModelController:tagModel?
+    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         self.window!.backgroundColor = UIColor.whiteColor()
@@ -27,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.rootViewController = self.nav
         self.nav!.setNavigationBarHidden(true, animated: false)
         
-        self.coreLocationController     = CoreLocationController()
+        self.coreLocationController = CoreLocationController()
+        self.tagModelController = tagModel()
         
         return true
     }

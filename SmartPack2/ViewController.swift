@@ -28,6 +28,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     var allSensorValues : [String] = []
     var writer : CBCharacteristic!
     var valuesRead : Bool!
+    var currentTag: Int!
     
 
     
@@ -68,6 +69,8 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         }
     }
     
+    
+    ///////////////// FUNCTION THAT FUNS WHEN A PERIPHERAL IS DETECTED
     
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
@@ -153,14 +156,15 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
                 self.smartpackPeripheral.readValueForCharacteristic(thisCharacteristic)
                 self.statusLabel.text = "Connected"
                 
+                
+
+                
             }
             
             if(thisCharacteristic.UUID == testConfigUUID3)
             {
                 self.writer = thisCharacteristic
             }
-            
-            
             
 //            if SensorTag.validConfigCharacteristic(thisCharacteristic) {
 //                // Enable Sensor
@@ -186,6 +190,8 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         print("*******status********")
         print(characteristic)
+        
+        
         
         if characteristic.value != nil && characteristic.UUID == testConfigUUID2
         {
@@ -214,6 +220,17 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             
             
             }
+            
+      
+          let temp = convertArraytoDictionary(allSensorValues)
+          let temp2 = [
+            "allSensorValues": allSensorValues,
+            "allSensorLabels": allSensorLabels,
+              //  "country":  placemark.country!,
+              //  "placemark": placemark
+            ]
+          
+          NSNotificationCenter.defaultCenter().postNotificationName("TAG_UPDATE", object: nil, userInfo: temp)
           self.smartpackTableView.reloadData()
         }
         
@@ -447,10 +464,16 @@ print(characteristic)
         ]
         return sensorValues
     }
+    /*********ConvertArraytoDictionary************/
+    func convertArraytoDictionary(array : [String]) -> [NSObject:AnyObject]{
+        var dict = [NSObject:AnyObject]()
+        for(var i = 0 ; i < array.count; i += 1){
+            dict[i] = array[i]
+        }
+    return(dict)
     
     
-    
-    
+    }
     
     /******* UITableViewDataSource *******/
     
@@ -488,7 +511,7 @@ print(characteristic)
         var testint = indexPath.row
         let data = NSData(bytes: &testint, length: 5)
         
-        pressme()
+        pressme(testint)
         
         if( allSensorValues[testint] != "Loading Values...")  // Check label tag for connectivty for checking the called SensorTag Value for non default values
         {
@@ -498,9 +521,9 @@ print(characteristic)
             print(self.writer)
     
            // self.smartpackPeripheral.writeValue(data, forCharacteristic: self.writer,  type: CBCharacteristicWriteType.WithResponse) // Writing values to bluetooth charactersic selected. If the write is success the delegate for didWriteValueForCharacteristic
-        
             
             
+            self.currentTag = testint
             
             print("after")
             print(self.writer.value)
@@ -512,11 +535,13 @@ print(characteristic)
     }
     
     
-    func pressme(){
+    func pressme(tag: Int){
         
         //******** navigation from one view controller to another *******//
+        let tagView = tagViewController()
+        tagView.myTag = tag
         
-        self.navigationController!.pushViewController(tagViewController(), animated: false)
+        self.navigationController!.pushViewController(tagView, animated: false)
         
         //******** creating UIalertview programmatically*******//
         

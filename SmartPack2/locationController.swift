@@ -15,6 +15,8 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
 
 
     var locationManager:CLLocationManager = CLLocationManager()
+   
+    
 
     override init() {
         super.init()
@@ -57,6 +59,35 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
         
         print("updatedLocation")
         print(location)
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, e) -> Void in
+            if e != nil {
+                print(e!.localizedDescription)
+            } else {
+                let placemark = placemarks!.last! as CLPlacemark
+                
+                let userInfo = [
+                    "city":     placemark.locality!,
+                    "state":    placemark.administrativeArea!,
+                    "country":  placemark.country!,
+                    "placemark": placemark
+                ]
+                
+                
+                
+                
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("LOCATION_AVAILABLE", object: nil, userInfo: userInfo)                
+                print("Printing UserInfo")
+                print(userInfo)
+                
+            }
+        })
     }
+    
+    
+    
+    
 
 }

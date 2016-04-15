@@ -15,15 +15,21 @@ class tagViewController: UIViewController,UITableViewDataSource, UITableViewDele
     // Table View
     var smartpackTableView : UITableView!
     var titleLabel : UILabel!
-    var allSensorLabels : [String]! = []
-    var allSensorValues : [String]! = []
+    var allSensorLabels : [String] = []
+    var allSensorValues : [String] = []
+    var tempSensorLabels : AnyObject = []
+    var tempSensorValues : AnyObject = []
     var button : UIButton!
+    var myTag : Int!
+    
     
     
     
         override func viewDidLoad() {
             super.viewDidLoad()
             self.view.backgroundColor=UIColor.whiteColor()
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(tagViewController.updateScreen(_:)), name: "SCREENUPDATE", object: nil)
 //            
 //            let view=UIView(frame: CGRectMake(20, 80, 100, 100))
 //            view.backgroundColor=UIColor.yellowColor()
@@ -65,6 +71,7 @@ class tagViewController: UIViewController,UITableViewDataSource, UITableViewDele
             
             allSensorValues = getSensorValues()
             allSensorLabels = getSensorLabels()
+            allSensorValues[0] = String(myTag)
             
             setupsmartpackTableView()
             
@@ -72,6 +79,17 @@ class tagViewController: UIViewController,UITableViewDataSource, UITableViewDele
 
            
         }
+    
+    
+    /********updateScreen***********/
+    
+    func updateScreen(notification:NSNotification) -> Void{
+        tempSensorValues = notification.userInfo!["allSensorValues" as NSObject]!
+        tempSensorLabels = notification.userInfo!["allSensorLabels" as NSObject]!
+        //print(temp)
+    }
+ 
+ 
     
     /******* UITableViewDataSource *******/
     
@@ -141,16 +159,21 @@ class tagViewController: UIViewController,UITableViewDataSource, UITableViewDele
             // Dispose of any resources that can be recreated.
         }
         func pressme(){
-            let alertView=UIAlertView()
-            alertView.title="RK"
-            alertView.addButtonWithTitle("OK") 
-            alertView.message="going back to first vc" 
-            
-            alertView.show() 
+//            let alertView=UIAlertView()
+//            alertView.title="RK"
+//            alertView.addButtonWithTitle("OK") 
+//            alertView.message="going back to first vc" 
+//            
+//            alertView.show() 
             
             self.navigationController!.popToRootViewControllerAnimated(true) 
             
         }
+    
+   
+ 
+    
+    
     
 }
 
