@@ -39,7 +39,7 @@ class tagModel: NSObject{
         {
             lastLocation = notification.userInfo as! Dictionary<String,NSObject>
         
-            print("WeatherService:  Location available \(lastLocation)")
+            //print("WeatherService:  Location available \(lastLocation)")
         }
         else{"Nothing to see here"}
         

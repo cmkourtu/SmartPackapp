@@ -10,6 +10,7 @@ import Foundation
 import CoreLocation
 
 
+
 class CoreLocationController : NSObject, CLLocationManagerDelegate {
 
 
@@ -22,7 +23,7 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
         super.init()
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
-      //  self.locationManager.distanceFilter = 1
+        self.locationManager.distanceFilter = 1
         
     }
     
@@ -71,7 +72,8 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
                     "city":     placemark.locality!,
                     "state":    placemark.administrativeArea!,
                     "country":  placemark.country!,
-                    "placemark": placemark
+                    "placemark": placemark,
+                    "location": location
                 ]
                 
                 
@@ -79,8 +81,8 @@ class CoreLocationController : NSObject, CLLocationManagerDelegate {
                 
                 
                 NSNotificationCenter.defaultCenter().postNotificationName("LOCATION_AVAILABLE", object: nil, userInfo: userInfo)                
-                print("Printing UserInfo")
-                print(userInfo)
+            //    print("Printing UserInfo")
+            //    print(userInfo)
                 
             }
         })

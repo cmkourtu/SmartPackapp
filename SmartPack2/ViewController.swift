@@ -29,6 +29,7 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
     var writer : CBCharacteristic!
     var valuesRead : Bool!
     var currentTag: Int!
+    var master: CBCharacteristic!
     
 
     
@@ -56,6 +57,13 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
         if central.state == CBCentralManagerState.PoweredOn {
             // Scan for peripherals if BLE is turned on
+            
+            let alertView=UIAlertView()
+            alertView.title="SmartPack"
+            alertView.addButtonWithTitle("OK")
+            alertView.message="You left your Calculator"
+            alertView.show()
+            
             
             print("Test")
             central.scanForPeripheralsWithServices(nil, options: nil)
@@ -152,6 +160,8 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
             if thisCharacteristic.UUID == testConfigUUID2 {  //// Check for valid characetersic  WARNING
                 // Enable Sensor Notification
                 print("Hello")
+                print(thisCharacteristic)
+                self.master = thisCharacteristic
                 self.smartpackPeripheral.setNotifyValue(true,forCharacteristic: thisCharacteristic)
                 self.smartpackPeripheral.readValueForCharacteristic(thisCharacteristic)
                 self.statusLabel.text = "Connected"
@@ -191,6 +201,9 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         print("*******status********")
         print(characteristic)
         
+       
+
+        
         
         
         if characteristic.value != nil && characteristic.UUID == testConfigUUID2
@@ -215,9 +228,33 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
                 }
             
             
-            allSensorValues[10] = convertGPS(valueArray)
+        //    allSensorValues[10] = convertGPS(valueArray)
+            var prevNumerous = allSensorValues[11]
             allSensorValues[11] = String(valueArray[0])
             
+            if ( Int(allSensorValues[11]) != nil && Int(prevNumerous) != nil)
+            {
+            
+            if(Int(prevNumerous)! - Int(allSensorValues[11])! > 0)
+            {
+                let alertView=UIAlertView()
+                alertView.title="SmartPack"
+                alertView.addButtonWithTitle("OK")
+                alertView.message="\(Int(prevNumerous)! - Int(allSensorValues[11])!) of your items left your backpack"
+                alertView.show()
+                
+            }
+            else if(Int(prevNumerous)! - Int(allSensorValues[11])! != 0)
+            {
+                let alertView=UIAlertView()
+                alertView.title="SmartPack"
+                alertView.addButtonWithTitle("OK")
+                alertView.message="\( Int(allSensorValues[11])! - Int(prevNumerous)!) of your items entered your backpack"
+                alertView.show()
+            
+            }
+                
+            }
             
             }
             
@@ -237,6 +274,16 @@ class ViewController: UIViewController,CBCentralManagerDelegate, CBPeripheralDel
         
 print("The Outer Loop")
 print(characteristic)
+        
+// If disconnected, start searching again
+func centralManager(central: CBCentralManager, didDisconnectPeripheral char: CBPeripheral, error: NSError?) {
+            self.statusLabel.text = "Disconnected"
+            central.scanForPeripheralsWithServices(nil, options: nil)
+            print("Disconnected")
+}
+        
+        
+        
         
         
     
@@ -370,6 +417,8 @@ print(characteristic)
     override func viewDidLoad() {
         print("ViewLoaded")
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateGPS(_:)), name: "LOCATION_AVAILABLE", object: nil)
+        
         // Initialize central manager on load
         centralManager = CBCentralManager(delegate: self, queue: nil)
 
@@ -424,16 +473,16 @@ print(characteristic)
     
      func getSensorLabels () -> [String] {
         let sensorLabels : [String] = [
-            "Tag 1",
-            "Tag 2",
-            "Tag 3",
-            "Tag 4",
-            "Tag 5",
-            "Tag 6",
-            "Tag 7",
-            "Tag 8",
-            "Tag 9",
-            "Tag 10",
+            "Laptop",
+            "Calculator",
+            "Notebook",
+            "Calc Textbook",
+            "iClicker",
+            "Keys",
+            "Binder 1",
+            "Binder 2",
+            "Pens",
+            "Lunch Bag",
             "GPS",
             "# of Tags Present"
         ]
@@ -545,14 +594,43 @@ print(characteristic)
         
         //******** creating UIalertview programmatically*******//
         
-//        let alertView=UIAlertView()
-//        alertView.title="RK"
-//        alertView.addButtonWithTitle("OK")
-//        alertView.message="Now you are in the second view controller"
-//        alertView.show()
+
+    }
+    
+    func updateGPS(notification: NSNotification){
+        print("Printing that LOOCAAFSJFNKJDSFBL")
+        
+        
+        
+        
+        var God = notification.userInfo!["location"]!
+        let str = String(God)
+        var index1 = str.startIndex.advancedBy(10)
+        var index2 = str.startIndex.advancedBy(14)
+        var substring1 = str.substringToIndex(index1)
+        var substring2 = str.substringFromIndex(index2)
+        var index3 = substring1.startIndex.advancedBy(2)
+        var index4 = substring2.startIndex.advancedBy(8)
+        var substring3 = substring1.substringFromIndex(index3)
+        var substring4 = substring2.substringToIndex(index4)
+        
+        
+        
+        allSensorValues[10] = substring3 + "," + substring4
+        print(substring1)
+        print(substring2)
+        print(substring3)
+        print(substring4)
+        
+        if((self.master) != nil){
+        self.smartpackPeripheral.readValueForCharacteristic(self.master)
+        }
+        
     }
     
     
+    
+
     
     
 
